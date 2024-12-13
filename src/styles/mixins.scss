@@ -1,0 +1,36 @@
+@use 'variables' as vars;
+
+@mixin flexCenter($direction: row) {
+	display: flex;
+	flex-direction: $direction;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin responsive($breakpoint) {
+	@media (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+@mixin box-shadow {
+	box-shadow: vars.$box-shadow;
+}
+
+@mixin font-size($size) {
+	font-size: $size;
+	line-height: 1.5;
+	letter-spacing: 1px;
+}
+
+@mixin responsive-text($property, $size-large, $size-medium, $size-small) {
+	#{$property}: $size-large;
+
+	@media (max-width: vars.$breakpoint-tablet) {
+		#{$property}: $size-medium;
+	}
+
+	@media (max-width: vars.$breakpoint-mobile) {
+		#{$property}: $size-small;
+	}
+}

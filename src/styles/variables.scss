@@ -1,0 +1,63 @@
+/* variables.scss */
+$font-family: 'Lato', sans-serif;
+
+/* Couleurs */
+$primary-color: #85460e;
+$danger-color: #ff2453;
+$warning-color: #e9bc0c;
+$success-color: #43ff64d9;
+$info-color: #43889d;
+
+$black: #111418;
+$black-light: #2b323b;
+$gray-dark: #4d586a;
+$gray: #7d8ba1;
+$gray-light: #b8c0cc;
+$white-dark: #f3f4f6;
+$white: #ffffff;
+
+/* Ombres */
+$box-shadow:
+	0 1px 2px -1px rgba(0, 0, 0, 0.25),
+	0 1px 3px 0px rgba(0, 0, 0, 0.15);
+
+/* Spacings */
+$spacing-xxs: 2px;
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 32px;
+$spacing-xl: 64px;
+
+/* Typographie - Variables pour différentes tailles */
+$font-sizes: (
+	large: (
+		h1: 34px,
+		h2: 30px,
+		h3: 26px,
+		h4: 22px,
+		p: 18px,
+		small: 14px,
+	),
+	medium: (
+		h1: 32px,
+		h2: 28px,
+		h3: 24px,
+		h4: 20px,
+		p: 16px,
+		small: 12px,
+	),
+	small: (
+		h1: 30px,
+		h2: 26px,
+		h3: 22px,
+		h4: 18px,
+		p: 14px,
+		small: 10px,
+	),
+);
+
+/* Breakpoints */
+$breakpoint-mobile: 720px;
+$breakpoint-tablet: 1024px;
+$breakpoint-desktop: 1440px;
