@@ -4,10 +4,6 @@
 			<UserForm @addUser="addUser" />
 		</section>
 
-		<!-- Alertes globales -->
-		<Alert v-if="alertMessage" :message="alertMessage" :type="alertType" @close="alertMessage = ''" />
-		<Alert v-if="error" :message="error" type="error" @close="userStore.clearError()" />
-
 		<!-- Barre de recherche -->
 		<SearchBar @update:query="updateSearchQuery" />
 
@@ -27,45 +23,43 @@
 <script setup lang="ts">
 	import { onMounted, ref, computed } from 'vue';
 	import { storeToRefs } from 'pinia';
+
 	import { useUserStore } from '@/stores/modules/userStore';
+	import { useAlertStore } from '@/stores/modules/alertStore';
 
 	import type { User } from '@/types/User';
 	import UserForm from '@/components/users/UserForm.vue';
 	import UserTable from '@/components/users/UserTable.vue';
 	import SearchBar from '@/components/common/SearchBar.vue';
 	import Loader from '@/components/common/Loader.vue';
-	import Alert from '@/components/common/Alert.vue';
 
+	// Stores
 	const userStore = useUserStore();
-	const { users, isLoading, error } = storeToRefs(userStore);
+	const alertStore = useAlertStore();
+
+	const { users, isLoading } = storeToRefs(userStore);
 	const { fetchUsers, createUser, removeUser } = userStore;
 
-	const alertMessage = ref('');
-	const alertType = ref<'success' | 'error' | 'info'>('info');
 	const searchQuery = ref('');
 	const sortDirection = ref<'asc' | 'desc'>('asc');
 
 	// Ajouter un utilisateur
-	const addUser = (name: string) => {
+	const addUser = async (name: string) => {
 		try {
-			createUser(name);
-			alertMessage.value = 'Utilisateur ajouté avec succès.';
-			alertType.value = 'success';
+			await createUser(name);
+			alertStore.addAlert('success', 'Utilisateur ajouté avec succès.');
 		} catch (err) {
-			alertMessage.value = 'Erreur lors de l’ajout de l’utilisateur.';
-			alertType.value = 'error';
+			alertStore.addAlert('error', 'Erreur lors de l’ajout de l’utilisateur.');
 		}
 	};
 
 	// Supprimer un utilisateur
-	const deleteUser = (id: string) => {
+	const deleteUser = async (id: string) => {
 		try {
-			removeUser(id);
-			alertMessage.value = 'Utilisateur supprimé avec succès.';
-			alertType.value = 'error';
+			await removeUser(id);
+			alertStore.addAlert('info', 'Utilisateur supprimé avec succès.');
 		} catch (err) {
-			alertMessage.value = 'Erreur lors de la suppression de l’utilisateur.';
-			alertType.value = 'error';
+			alertStore.addAlert('error', 'Erreur lors de la suppression de l’utilisateur.');
 		}
 	};
 

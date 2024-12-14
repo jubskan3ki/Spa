@@ -13,11 +13,15 @@
 
 		<!-- Footer -->
 		<footer class="footer"></footer>
+
+		<!-- AlertList -->
+		<AlertList />
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { IMAGES } from '@/config/images';
+	import AlertList from '@/components/layouts/AlertList.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -33,11 +33,7 @@
 	@use '@/styles/variables' as vars;
 
 	.alert {
-		position: fixed;
-		bottom: vars.$spacing-md;
-		left: vars.$spacing-md;
 		padding: vars.$spacing-md;
-		margin-bottom: vars.$spacing-md;
 		border-radius: 6px;
 		color: white;
 		font-weight: bold;
