@@ -18,13 +18,23 @@
 <script setup lang="ts">
 	import { IMAGES } from '@/config/images';
 	import type { User } from '@/types/User';
+	import { useModalStore } from '@/stores/modules/modalStore';
 
 	const props = defineProps<{
 		user: User;
 	}>();
 	const emit = defineEmits(['deleteUser']);
+	const modalStore = useModalStore();
 
-	const onDelete = () => emit('deleteUser', props.user.id);
+	const onDelete = () => {
+		modalStore.openModal({
+			title: 'Confirmation',
+			message: `Êtes-vous sûr de vouloir supprimer ${props.user.name} ?`,
+			confirmLabel: 'Supprimer',
+			cancelLabel: 'Annuler',
+			onConfirm: () => emit('deleteUser', props.user.id),
+		});
+	};
 </script>
 
 <style scoped lang="scss">

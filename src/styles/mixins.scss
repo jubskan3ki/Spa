@@ -1,5 +1,7 @@
+@use '@/styles/animations' as anim;
 @use 'variables' as vars;
 
+/* Centrage Flex */
 @mixin flexCenter($direction: row) {
 	display: flex;
 	flex-direction: $direction;
@@ -7,22 +9,35 @@
 	align-items: center;
 }
 
-@mixin responsive($breakpoint) {
-	@media (max-width: $breakpoint) {
-		@content;
-	}
+/* Animation Fade */
+@mixin fade-in($duration: 0.5s) {
+	animation: fadeIn $duration ease-in-out;
 }
 
+@mixin fade-out($duration: 0.5s) {
+	animation: fadeOut $duration ease-in-out forwards;
+}
+
+/* Ombres */
 @mixin box-shadow {
 	box-shadow: vars.$box-shadow;
 }
 
+/* Taille de Police */
 @mixin font-size($size) {
 	font-size: $size;
 	line-height: 1.5;
 	letter-spacing: 1px;
 }
 
+/* Responsive */
+@mixin responsive($breakpoint) {
+	@media (max-width: $breakpoint) {
+		@content;
+	}
+}
+
+/* Texte Responsive */
 @mixin responsive-text($property, $size-large, $size-medium, $size-small) {
 	#{$property}: $size-large;
 
