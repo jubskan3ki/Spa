@@ -1,7 +1,0 @@
-{
-	"extends": "./tsconfig.base.json",
-	"compilerOptions": {
-		"noEmit": true
-	},
-	"include": ["vite.config.ts", "tests/**/*.ts", "jest.setup.ts"]
-}
