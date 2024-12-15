@@ -1,5 +1,6 @@
 <template>
 	<div class="table-container">
+		<!-- Tableau des utilisateurs -->
 		<table>
 			<thead>
 				<tr>
@@ -11,24 +12,51 @@
 					<th></th>
 				</tr>
 			</thead>
+
 			<tbody>
-				<UserRow v-for="user in users" :key="user.id" :user="user" @deleteUser="onDeleteUser" />
+				<UserRow
+					v-for="(user, index) in paginatedUsers"
+					:key="user.id"
+					:user="user"
+					:index="index"
+					@deleteUser="onDeleteUser"
+				/>
 			</tbody>
 		</table>
+
+		<!-- Pagination -->
+		<Pagination
+			:currentPage="currentPage"
+			:totalPages="totalPages"
+			:prevIcon="IMAGES.ICONS.ARROW_TOP"
+			:nextIcon="IMAGES.ICONS.ARROW_DOWN"
+			@pageChange="changePage"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue';
+	import { ref, computed } from 'vue';
 	import UserRow from '@/components/users/UserRow.vue';
+	import Pagination from '@/components/common/Pagination.vue';
 	import { IMAGES } from '@/config/images';
-	import type { User } from '@/types/User';
+	import { useUserStore } from '@/stores/modules/userStore';
 
-	defineProps<{ users: User[] }>();
-	const emit = defineEmits(['deleteUser', 'sortUsers']);
-
+	const emit = defineEmits(['sortUsers', 'deleteUser']);
+	const userStore = useUserStore();
 	const sortDirection = ref<'asc' | 'desc'>('asc');
 	const sortIcon = ref(IMAGES.ICONS.ARROW_TOP);
+
+	const currentPage = computed(() => userStore.currentPage);
+	const totalPages = computed(() => userStore.totalPages);
+	const paginatedUsers = computed(() => userStore.paginatedUsers);
+
+	const changePage = (page: number) => {
+		if (page >= 1 && page <= totalPages.value) {
+			console.log(`Changement de page vers : ${page}`);
+			userStore.setPage(page);
+		}
+	};
 
 	const onSort = (key: string) => {
 		sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
@@ -38,7 +66,6 @@
 
 	const onDeleteUser = (id: string) => emit('deleteUser', id);
 </script>
-
 <style lang="scss" scoped>
 	@use '@/styles/variables' as vars;
 	@use '@/styles/mixins' as mix;
@@ -46,43 +73,23 @@
 	.table-container {
 		width: 100%;
 		overflow-x: auto;
-	}
 
-	.th-name {
-		cursor: pointer;
-	}
+		table {
+			width: 100%;
+			border-collapse: collapse;
 
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		margin-top: vars.$spacing-md;
+			thead {
+				th {
+					padding: vars.$spacing-sm;
+					text-align: left;
 
-		thead {
-			th {
-				padding: vars.$spacing-sm;
-				text-align: left;
-				white-space: nowrap;
-
-				img {
-					margin-left: vars.$spacing-xs;
-					width: 20px;
-					height: 20px;
-					vertical-align: middle;
+					img {
+						margin-left: vars.$spacing-xs;
+						width: 16px;
+						height: 16px;
+						transition: transform 0.3s;
+					}
 				}
-			}
-		}
-
-		@include mix.responsive(vars.$breakpoint-tablet) {
-			th,
-			td {
-				padding: vars.$spacing-xs;
-			}
-		}
-
-		@include mix.responsive(vars.$breakpoint-mobile) {
-			th,
-			td {
-				padding: vars.$spacing-xxs;
 			}
 		}
 	}

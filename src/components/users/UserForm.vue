@@ -8,7 +8,7 @@
 			:hasError="!!errorMessage"
 			:aria-invalid="!!errorMessage"
 		/>
-		<BaseButton className="button-from" type="submit" variant="primary">Valider</BaseButton>
+		<BaseButton className="button-from" type="submit" variant="primary" aria-label="Valider">Valider</BaseButton>
 		<p v-if="errorMessage" class="error">{{ errorMessage }}</p>
 		<small class="info">*Seul le champ nom est nécessaire. le reste étant peuplé automatiquement par l'API</small>
 	</form>

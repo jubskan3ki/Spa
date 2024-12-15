@@ -18,6 +18,25 @@
 	animation: fadeOut $duration ease-in-out forwards;
 }
 
+/* Animation Slide-in Bounce */
+@mixin slide-in-bounce($duration: 0.6s, $delay: 0s) {
+	animation: slideInBounce $duration cubic-bezier(0.25, 1, 0.5, 1);
+	animation-delay: $delay;
+	animation-fill-mode: forwards;
+}
+
+/* Animation Slide-out Bounce */
+@mixin slide-out-bounce($duration: 0.6s, $delay: 0s) {
+	animation: slideOutBounce $duration cubic-bezier(0.25, 1, 0.5, 1);
+	animation-delay: $delay;
+	animation-fill-mode: forwards;
+}
+
+/* Animation Slide-out */
+@mixin slide-out($duration: 0.5s) {
+	animation: slideOut $duration ease-in-out forwards;
+}
+
 /* Ombres */
 @mixin box-shadow {
 	box-shadow: vars.$box-shadow;

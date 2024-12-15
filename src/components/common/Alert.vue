@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, watch } from 'vue';
+	import { ref, onMounted } from 'vue';
 
 	defineProps({
 		type: { type: String, default: 'info' },
@@ -17,15 +17,15 @@
 
 	// Permet de masquer l'alerte
 	const hideAlert = () => {
-		visible.value = false;
-		emit('close');
+		if (visible.value) {
+			visible.value = false;
+			emit('close');
+		}
 	};
 
 	// Auto hide after 3 seconds
-	watch(visible, (val) => {
-		if (val) {
-			setTimeout(hideAlert, 3000);
-		}
+	onMounted(() => {
+		setTimeout(hideAlert, 3000);
 	});
 </script>
 

@@ -7,7 +7,18 @@ export const useUserStore = defineStore('userStore', {
 		users: [] as User[],
 		isLoading: false,
 		error: null as string | null,
+		currentPage: 1,
+		pageSize: 5, // Nombre d'utilisateurs par page
 	}),
+	getters: {
+		// Calcul des utilisateurs paginés
+		paginatedUsers: (state) => {
+			const start = (state.currentPage - 1) * state.pageSize;
+			const end = start + state.pageSize;
+			return state.users.slice(start, end);
+		},
+		totalPages: (state) => Math.ceil(state.users.length / state.pageSize),
+	},
 	actions: {
 		async fetchUsers() {
 			this.isLoading = true;
@@ -44,6 +55,10 @@ export const useUserStore = defineStore('userStore', {
 			} finally {
 				this.users = await getUsers();
 			}
+		},
+
+		setPage(page: number) {
+			this.currentPage = page;
 		},
 
 		clearError() {

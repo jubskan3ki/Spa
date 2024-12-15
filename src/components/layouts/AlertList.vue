@@ -1,12 +1,13 @@
 <template>
 	<div class="alert-list">
-		<transition-group name="slide-fade" tag="div" class="alert-list-container">
+		<transition-group tag="div" class="alert-list-container" name="alert">
 			<Alert
-				v-for="alert in alerts"
+				v-for="(alert, index) in alerts"
 				:key="alert.id"
 				:type="alert.type"
 				:message="alert.message"
 				@close="removeAlert(alert.id)"
+				:style="getAnimationDelay(index)"
 			/>
 		</transition-group>
 	</div>
@@ -20,6 +21,10 @@
 	const alertStore = useAlertStore();
 	const { alerts } = storeToRefs(alertStore);
 
+	const getAnimationDelay = (index: number) => ({
+		animationDelay: `${index * 0.1}s`,
+	});
+
 	const removeAlert = (id: number) => {
 		alertStore.removeAlert(id);
 	};
@@ -27,6 +32,7 @@
 
 <style lang="scss" scoped>
 	@use '@/styles/variables' as vars;
+	@use '@/styles/mixins' as mix;
 
 	.alert-list {
 		position: fixed;
@@ -40,19 +46,37 @@
 		.alert-list-container {
 			display: flex;
 			flex-direction: column;
-			gap: 10px; /* Espacement entre chaque alerte */
-		}
+			gap: vars.$spacing-sm;
 
-		/* Animation pour les transitions */
-		.slide-fade-enter-active,
-		.slide-fade-leave-active {
-			transition: all 0.5s ease;
-		}
+			/* Animation d'entrée */
+			.alert-enter-active {
+				@include mix.slide-in-bounce(0.6s);
+			}
 
-		.slide-fade-enter-from,
-		.slide-fade-leave-to {
-			opacity: 0;
-			transform: translateY(10px); /* Effet de glissement */
+			.alert-enter-from {
+				opacity: 0;
+				transform: translateX(-30px);
+			}
+
+			.alert-enter-to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+
+			/* Animation de sortie */
+			.alert-leave-active {
+				@include mix.slide-out-bounce(0.6s);
+			}
+
+			.alert-leave-from {
+				opacity: 1;
+				transform: translateX(0);
+			}
+
+			.alert-leave-to {
+				opacity: 0;
+				transform: translateX(30px);
+			}
 		}
 	}
 </style>
