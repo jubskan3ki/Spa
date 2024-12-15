@@ -1,0 +1,22 @@
+services:
+    vite-app:
+        container_name: spa
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '4173:4173'
+        environment:
+            - NODE_ENV=production
+        restart: unless-stopped
+        networks:
+            - preprod-network
+        healthcheck:
+            test: ['CMD-SHELL', 'curl --fail http://localhost:4173 || exit 1']
+            interval: 10s
+            retries: 3
+            timeout: 5s
+
+networks:
+    preprod-network:
+        driver: bridge
