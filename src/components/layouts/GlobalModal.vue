@@ -87,13 +87,11 @@
 
 		h2 {
 			color: vars.$primary-color;
-			@include mix.font-size(map-get(vars.$font-sizes, medium, h2));
 			margin-bottom: vars.$spacing-md;
 		}
 
 		p {
 			color: vars.$gray-dark;
-			@include mix.font-size(map-get(vars.$font-sizes, medium, p));
 			margin-bottom: vars.$spacing-md;
 		}
 
@@ -132,8 +130,7 @@
 					color: vars.$white;
 
 					&:hover {
-						background-color: darken(vars.$success-color, 10%);
-						transform: translateY(-2px);
+						@include mix.hover-adjust-bg(vars.$success-color, -10%);
 					}
 				}
 
@@ -142,8 +139,7 @@
 					color: vars.$white;
 
 					&:hover {
-						background-color: darken(vars.$danger-color, 10%);
-						transform: translateY(-2px);
+						@include mix.hover-adjust-bg(vars.$danger-color, -10%);
 					}
 				}
 			}

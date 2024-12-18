@@ -1,5 +1,6 @@
 @use '@/styles/animations' as anim;
 @use 'variables' as vars;
+@use 'sass:color';
 
 /* Centrage Flex */
 @mixin flexCenter($direction: row) {
@@ -66,5 +67,15 @@
 
 	@media (max-width: vars.$breakpoint-mobile) {
 		#{$property}: $size-small;
+	}
+}
+
+/* Hover pour ajuster la couleur de fond */
+@mixin hover-adjust-bg($base-color, $adjust-percent: -10%) {
+	background-color: $base-color;
+
+	&:hover {
+		background-color: color.adjust($base-color, $lightness: $adjust-percent);
+		transform: translateY(-2px);
 	}
 }
