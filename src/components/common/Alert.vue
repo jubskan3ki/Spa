@@ -6,16 +6,14 @@
 
 <script setup lang="ts">
 	import { ref, onMounted } from 'vue';
+	import type { AlertProps, AlertEmits } from '@/types/components/common/Alert.type';
 
-	defineProps({
-		type: { type: String, default: 'info' },
-		message: { type: String, required: true },
-	});
+	defineProps<AlertProps>();
+	const emit = defineEmits<AlertEmits>();
 
-	const emit = defineEmits(['close']);
 	const visible = ref(true);
 
-	// Permet de masquer l'alerte
+	// Masquer l'alerte
 	const hideAlert = () => {
 		if (visible.value) {
 			visible.value = false;
@@ -23,10 +21,8 @@
 		}
 	};
 
-	// Auto hide after 3 seconds
-	onMounted(() => {
-		setTimeout(hideAlert, 3000);
-	});
+	// Auto hide après 3 secondes
+	onMounted(() => setTimeout(hideAlert, 3000));
 </script>
 
 <style lang="scss" scoped>

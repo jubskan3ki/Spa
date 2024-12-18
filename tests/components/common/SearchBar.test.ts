@@ -1,4 +1,3 @@
-// tests/SearchBar.test.ts
 import SearchBar from '@/components/common/SearchBar.vue';
 import { render, fireEvent } from '@testing-library/vue';
 

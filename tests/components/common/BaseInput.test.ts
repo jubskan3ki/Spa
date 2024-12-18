@@ -1,4 +1,3 @@
-// tests/BaseInput.test.ts
 import BaseInput from '@/components/common/BaseInput.vue';
 import { render, fireEvent } from '@testing-library/vue';
 

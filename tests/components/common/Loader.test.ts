@@ -1,4 +1,3 @@
-// tests/Loader.test.ts
 import Loader from '@/components/common/Loader.vue';
 import { render } from '@testing-library/vue';
 

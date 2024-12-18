@@ -1,8 +1,7 @@
-<!-- components/common/Pagination.vue -->
 <template>
 	<div class="pagination">
 		<button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">
-			<img :src="prevIcon" alt="Précédent" class="arrow left" />
+			<img :src="prevIcon" alt="Précédent" class="arrow" />
 		</button>
 		<span
 			v-for="page in displayedPages"
@@ -13,34 +12,26 @@
 			{{ page }}
 		</span>
 		<button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">
-			<img :src="nextIcon" alt="Suivant" class="arrow right" />
+			<img :src="nextIcon" alt="Suivant" class="arrow" />
 		</button>
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { computed } from 'vue';
+	import type { PaginationProps, PaginationEmits } from '@/types/components/common/Pagination.type';
 
-	// Props
-	const props = defineProps<{
-		currentPage: number;
-		totalPages: number;
-		prevIcon: string;
-		nextIcon: string;
-	}>();
+	const props = defineProps<PaginationProps>();
+	const emit = defineEmits<PaginationEmits>();
 
-	const emit = defineEmits<{
-		(e: 'pageChange', page: number): void;
-	}>();
-
-	// Fonction pour changer de page
+	// Changer de page
 	const changePage = (page: number) => {
 		if (page >= 1 && page <= props.totalPages) {
 			emit('pageChange', page);
 		}
 	};
 
-	// Calcul des pages à afficher
+	// Pages à afficher
 	const displayedPages = computed(() => {
 		const pages: number[] = [];
 		const maxVisiblePages = 5;
@@ -48,13 +39,10 @@
 		let start = Math.max(1, props.currentPage - Math.floor(maxVisiblePages / 2));
 		let end = Math.min(props.totalPages, start + maxVisiblePages - 1);
 
-		if (end - start < maxVisiblePages) {
-			start = Math.max(1, end - maxVisiblePages + 1);
-		}
+		if (end - start < maxVisiblePages) start = Math.max(1, end - maxVisiblePages + 1);
 
-		for (let i = start; i <= end; i++) {
-			pages.push(i);
-		}
+		for (let i = start; i <= end; i++) pages.push(i);
+
 		return pages;
 	});
 </script>

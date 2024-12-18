@@ -19,21 +19,21 @@
 	import { useModalStore } from '@/stores/modules/modalStore';
 	import { ref } from 'vue';
 
+	// Récupération du store
 	const modalStore = useModalStore();
 	const { isVisible, options } = storeToRefs(modalStore);
 
+	// Données internes
 	const inputValue = ref('');
 	const isFadingOut = ref(false);
 
+	// Confirmation de l'action
 	const confirm = () => {
-		if (options.value.inputRequired) {
-			options.value.onConfirm?.(inputValue.value);
-		} else {
-			options.value.onConfirm?.();
-		}
+		options.value.onConfirm?.(options.value.inputRequired ? inputValue.value : undefined);
 		close();
 	};
 
+	// Fermeture du modal avec animation
 	const close = () => {
 		isFadingOut.value = true;
 		setTimeout(() => {

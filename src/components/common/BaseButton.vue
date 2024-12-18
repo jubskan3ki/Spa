@@ -1,47 +1,52 @@
 <template>
 	<button
 		:type="type"
-		:class="['base-button', variant, className, { outline, disabled }]"
+		:class="buttonClasses"
 		:disabled="disabled"
 		:aria-disabled="disabled"
 		:aria-label="ariaLabel"
-		@click="onClick"
+		@click="handleClick"
 	>
 		<slot></slot>
 	</button>
 </template>
 
 <script setup lang="ts">
-	import { PropType } from 'vue';
+	import type { BaseButtonProps } from '@/types/components/common/BaseButton.type';
 
-	// Props typées
-	const props = defineProps({
-		type: { type: String as PropType<'button' | 'submit' | 'reset'>, default: 'button' },
-		variant: { type: String, default: 'primary' },
-		className: { type: String, default: '' },
-		outline: { type: Boolean, default: false },
-		disabled: { type: Boolean, default: false },
-		ariaLabel: { type: String, default: 'Button' },
+	// Props avec valeurs par défaut
+	const props = withDefaults(defineProps<BaseButtonProps>(), {
+		variant: 'primary',
+		className: '',
+		outline: false,
+		disabled: false,
+		ariaLabel: 'Button',
 	});
 
-	const emit = defineEmits(['click']);
+	const emit = defineEmits<{ (e: 'click', event: Event): void }>();
 
-	const onClick = (event: Event) => {
+	// Classes dynamiques
+	const buttonClasses = [
+		'base-button',
+		props.variant,
+		props.className,
+		{ outline: props.outline, disabled: props.disabled },
+	];
+
+	// Gestion du clic
+	const handleClick = (event: Event) => {
 		if (!props.disabled) emit('click', event);
 	};
 </script>
 
 <style lang="scss" scoped>
 	@use '@/styles/variables' as vars;
-	@use 'sass:color';
 
 	.base-button {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		padding: vars.$spacing-sm vars.$spacing-md;
-		font-weight: 500;
-		border: none;
 		border-radius: 6px;
 		cursor: pointer;
 		transition: all 0.2s ease;

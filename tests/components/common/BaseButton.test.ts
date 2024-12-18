@@ -1,4 +1,3 @@
-// tests/BaseButton.test.ts
 import BaseButton from '@/components/common/BaseButton.vue';
 import { render, fireEvent } from '@testing-library/vue';
 

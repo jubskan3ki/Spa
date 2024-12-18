@@ -7,7 +7,7 @@
 				:type="type"
 				:placeholder="placeholder"
 				:value="modelValue"
-				@input="onInput"
+				@input="handleInput"
 				:class="{ error: hasError }"
 				:aria-invalid="hasError"
 			/>
@@ -20,21 +20,23 @@
 </template>
 
 <script setup lang="ts">
-	// Props typées
-	defineProps({
-		id: { type: String, default: () => `input-${crypto.randomUUID()}` },
-		type: { type: String, default: 'text' },
-		placeholder: { type: String, default: '' },
-		modelValue: { type: String, required: true },
-		label: { type: String, default: '' },
-		icon: { type: String, default: '' },
-		errorMessage: { type: String, default: '' },
-		hasError: { type: Boolean, default: false },
+	import type { BaseInputProps } from '@/types/components/common/BaseInput.type';
+
+	// Props avec valeurs par défaut
+	withDefaults(defineProps<BaseInputProps>(), {
+		id: () => `input-${crypto.randomUUID()}`, // Génère un id par défaut unique
+		type: 'text',
+		placeholder: '',
+		label: '',
+		errorMessage: '',
+		hasError: false,
+		icon: '',
+		modelValue: '',
 	});
 
-	const emit = defineEmits(['update:modelValue']);
+	const emit = defineEmits<{ (e: 'update:modelValue', value: string): void }>();
 
-	const onInput = (event: Event) => {
+	const handleInput = (event: Event) => {
 		emit('update:modelValue', (event.target as HTMLInputElement).value);
 	};
 </script>

@@ -1,19 +1,17 @@
 <template>
-	<div
-		class="loader"
-		:style="{
-			width: size,
-			height: size,
-			borderTopColor: color,
-		}"
-	></div>
+	<div class="loader" :style="loaderStyles"></div>
 </template>
 
 <script setup lang="ts">
-	defineProps({
-		size: { type: String, default: '40px' },
-		color: { type: String, default: 'vars.$primary-color' },
-	});
+	import type { LoaderProps } from '@/types/components/common/Loader.type';
+
+	const props = defineProps<LoaderProps>();
+
+	const loaderStyles = {
+		width: props.size || '40px',
+		height: props.size || '40px',
+		borderTopColor: props.color || 'vars.$primary-color',
+	};
 </script>
 
 <style lang="scss" scoped>

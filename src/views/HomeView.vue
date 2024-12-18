@@ -27,7 +27,7 @@
 	import { useUserStore } from '@/stores/modules/userStore';
 	import { useAlertStore } from '@/stores/modules/alertStore';
 
-	import type { User } from '@/types/User';
+	import type { User, SortOptions } from '@/types/components/users/User';
 	import UserForm from '@/components/users/UserForm.vue';
 	import UserTable from '@/components/users/UserTable.vue';
 	import SearchBar from '@/components/common/SearchBar.vue';
@@ -73,13 +73,13 @@
 	});
 
 	// Trier les utilisateurs
-	const sortUsers = ({ key }: { key: keyof User }) => {
-		sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+	const sortUsers = ({ key, direction }: SortOptions) => {
+		sortDirection.value = direction;
 		users.value.sort((a, b) => {
-			const valueA = a[key] ?? '';
-			const valueB = b[key] ?? '';
+			const valueA = a[key as keyof User] ?? '';
+			const valueB = b[key as keyof User] ?? '';
 
-			if (sortDirection.value === 'asc') return valueA > valueB ? 1 : -1;
+			if (direction === 'asc') return valueA > valueB ? 1 : -1;
 			return valueA < valueB ? 1 : -1;
 		});
 	};

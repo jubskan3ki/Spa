@@ -16,17 +16,19 @@
 </template>
 
 <script setup lang="ts">
-	import { IMAGES } from '@/config/images';
-	import type { User } from '@/types/User';
-	import { useModalStore } from '@/stores/modules/modalStore';
 	import { computed } from 'vue';
+	import { IMAGES } from '@/config/images';
+	import type { User } from '@/types/components/users/User';
+	import { useModalStore } from '@/stores/modules/modalStore';
 
 	const props = defineProps<{
 		user: User;
 		index: number;
 	}>();
 
-	const emit = defineEmits<{ deleteUser: [id: string] }>();
+	const emit = defineEmits<{
+		(e: 'deleteUser', id: string): void;
+	}>();
 
 	const modalStore = useModalStore();
 
@@ -40,7 +42,7 @@
 			message: `Êtes-vous sûr de vouloir supprimer ${props.user.name} ?`,
 			confirmLabel: 'Supprimer',
 			cancelLabel: 'Annuler',
-			onConfirm: (): void => emit('deleteUser', props.user.id),
+			onConfirm: () => emit('deleteUser', props.user.id),
 		});
 	};
 </script>

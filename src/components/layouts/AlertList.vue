@@ -18,13 +18,16 @@
 	import { useAlertStore } from '@/stores/modules/alertStore';
 	import Alert from '@/components/common/Alert.vue';
 
+	// Récupération du store
 	const alertStore = useAlertStore();
-	const { alerts } = storeToRefs(alertStore);
+	const { alerts } = storeToRefs(alertStore); // Pas de typage ici !
 
+	// Calcul du délai d'animation
 	const getAnimationDelay = (index: number) => ({
 		animationDelay: `${index * 0.1}s`,
 	});
 
+	// Suppression d'une alerte
 	const removeAlert = (id: number) => {
 		alertStore.removeAlert(id);
 	};

@@ -1,13 +1,5 @@
+import type { ModalOptions } from '@/types/components/layout/GlobalModal.type';
 import { defineStore } from 'pinia';
-
-interface ModalOptions {
-	title: string;
-	message: string;
-	confirmLabel?: string;
-	cancelLabel?: string;
-	inputRequired?: boolean;
-	onConfirm?: (inputValue?: string) => void;
-}
 
 export const useModalStore = defineStore('modalStore', {
 	state: () => ({

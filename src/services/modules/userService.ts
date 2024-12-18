@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from '@/config/api';
 import httpClient from '@/services/httpClient';
-import type { User } from '@/types/User';
+import type { User } from '@/types/components/users/User';
 
 const ENDPOINT = API_ENDPOINTS.USERS;
 

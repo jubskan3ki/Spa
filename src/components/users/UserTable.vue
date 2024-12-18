@@ -1,6 +1,5 @@
 <template>
 	<div class="table-container">
-		<!-- Tableau des utilisateurs -->
 		<table>
 			<thead>
 				<tr>
@@ -12,7 +11,6 @@
 					<th></th>
 				</tr>
 			</thead>
-
 			<tbody>
 				<UserRow
 					v-for="(user, index) in paginatedUsers"
@@ -24,7 +22,6 @@
 			</tbody>
 		</table>
 
-		<!-- Pagination -->
 		<Pagination
 			:currentPage="currentPage"
 			:totalPages="totalPages"
@@ -41,19 +38,24 @@
 	import Pagination from '@/components/common/Pagination.vue';
 	import { IMAGES } from '@/config/images';
 	import { useUserStore } from '@/stores/modules/userStore';
+	import type { SortOptions } from '@/types/components/users/User';
 
-	const emit = defineEmits(['sortUsers', 'deleteUser']);
+	const emit = defineEmits<{
+		(e: 'sortUsers', options: SortOptions): void;
+		(e: 'deleteUser', id: string): void;
+	}>();
+
 	const userStore = useUserStore();
-	const sortDirection = ref<'asc' | 'desc'>('asc');
-	const sortIcon = ref(IMAGES.ICONS.ARROW_TOP);
 
 	const currentPage = computed(() => userStore.currentPage);
 	const totalPages = computed(() => userStore.totalPages);
 	const paginatedUsers = computed(() => userStore.paginatedUsers);
 
+	const sortDirection = ref<'asc' | 'desc'>('asc');
+	const sortIcon = ref(IMAGES.ICONS.ARROW_TOP);
+
 	const changePage = (page: number) => {
 		if (page >= 1 && page <= totalPages.value) {
-			console.log(`Changement de page vers : ${page}`);
 			userStore.setPage(page);
 		}
 	};
@@ -66,6 +68,7 @@
 
 	const onDeleteUser = (id: string) => emit('deleteUser', id);
 </script>
+
 <style lang="scss" scoped>
 	@use '@/styles/variables' as vars;
 	@use '@/styles/mixins' as mix;
@@ -73,6 +76,10 @@
 	.table-container {
 		width: 100%;
 		overflow-x: auto;
+
+		.th-name {
+			cursor: pointer;
+		}
 
 		table {
 			width: 100%;

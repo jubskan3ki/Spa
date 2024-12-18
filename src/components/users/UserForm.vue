@@ -19,7 +19,10 @@
 	import BaseInput from '@/components/common/BaseInput.vue';
 	import BaseButton from '@/components/common/BaseButton.vue';
 
-	const emit = defineEmits(['addUser']);
+	const emit = defineEmits<{
+		(e: 'addUser', name: string): void;
+	}>();
+
 	const userName = ref('');
 	const errorMessage = ref('');
 
@@ -29,7 +32,7 @@
 
 	const submitForm = () => {
 		if (userName.value.trim()) {
-			emit('addUser', userName.value);
+			emit('addUser', userName.value.trim());
 			userName.value = '';
 			errorMessage.value = '';
 		} else {

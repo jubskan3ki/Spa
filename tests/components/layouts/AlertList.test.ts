@@ -1,4 +1,3 @@
-// tests/components/common/AlertList.test.ts
 import AlertList from '@/components/layouts/AlertList.vue';
 import { useAlertStore } from '@/stores/modules/alertStore';
 import { render, screen, fireEvent } from '@testing-library/vue';

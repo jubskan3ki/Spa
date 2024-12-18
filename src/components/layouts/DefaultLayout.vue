@@ -1,10 +1,7 @@
 <template>
 	<div class="layout">
 		<!-- Header -->
-		<header class="header">
-			<img :src="IMAGES.LOGO" alt="Logo" class="logo" />
-			<h1 class="title">THE <span>INTRANET</span></h1>
-		</header>
+		<Header />
 
 		<!-- Contenu principal -->
 		<main class="main">
@@ -12,7 +9,7 @@
 		</main>
 
 		<!-- Footer -->
-		<footer class="footer"></footer>
+		<Footer />
 
 		<!-- AlertList -->
 		<AlertList />
@@ -23,7 +20,8 @@
 </template>
 
 <script setup lang="ts">
-	import { IMAGES } from '@/config/images';
+	import Header from '@/components/layouts/Header.vue';
+	import Footer from '@/components/layouts/Footer.vue';
 	import AlertList from '@/components/layouts/AlertList.vue';
 	import GlobalModal from '@/components/layouts/GlobalModal.vue';
 </script>

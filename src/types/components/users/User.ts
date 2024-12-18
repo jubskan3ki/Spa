@@ -8,3 +8,8 @@ export interface User {
 	service?: string;
 	createdAt?: string;
 }
+
+export interface SortOptions {
+	key: string;
+	direction: 'asc' | 'desc';
+}
